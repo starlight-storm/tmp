@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8"/>
+<link href="/css/reset.css" th:href="@{/css/reset.css}" rel="stylesheet"></link>
+<link href="/css/warehouse.css" th:href="@{/css/warehouse.css}" rel="stylesheet"></link>
+<title th:text="#{title.goods.create.confirm}">しょうひん登録画面（確認）</title>
+</head>
+<body>
+	<header>
+		<h1 th:text="#{header.goods}">ぬる商事 ほんしゃ</h1>
+	</header>
+	<form method="post" th:action="@{/goods/{code}(code=${code})/create/complete}">
+		<p>
+			以下の商品を登録します。<br/> よろしいですか？
+		</p>
+		<br/>
+		<table>
+			<tr>
+				<th th:text="#{code}">しょうひんコード</th>
+				<td th:text="${goods.code}">200</td>
+			</tr>
+			<tr>
+				<th th:text="#{name}">しょうひん名</th>
+				<td th:text="${goods.name}">イチジク</td>
+			</tr>
+			<tr>
+				<th th:text="#{price}">かかく</th>
+				<td th:text="${goods.price}">¥100</td>
+			</tr>
+		</table>
+		<div>
+			<br/>
+			<input type="submit" th:value="#{label.back}" value="もどる" onclick="history.back(); return false;" />
+			<input type="submit" th:value="#{label.create}" value="とうろく" /> <br/>
+			<br/> <a th:href="@{'/goods/menu'}">本社メニューへ</a>
+		</div>
+	</form>
+	<footer>
+		<address>Copyright(C)20xx ぬる商事 Allright Reserved.</address>
+	</footer>
+</body>
+</html>

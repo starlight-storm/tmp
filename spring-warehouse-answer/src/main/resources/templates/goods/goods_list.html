@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8"/>
+<link href="/css/reset.css" th:href="@{/css/reset.css}" rel="stylesheet"></link>
+<link href="/css/warehouse.css" th:href="@{/css/warehouse.css}" rel="stylesheet"></link>
+<title th:text="#{title.goods.list}">しょうひん一覧画面</title>
+</head>
+<body th:object="${goodsList}">
+	<header>
+		<h1 th:text="#{header.goods}">ぬる商事 ほんしゃ</h1>
+	</header>
+	<div th:if="${#fields.hasGlobalErrors()}">
+		<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">エラーメッセージ表示エリア</p>
+	</div>
+	<table>
+		<tr>
+			<th th:text="#{code}">しょうひんコード</th>
+			<th th:text="#{name}">しょうひん名</th>
+			<th th:text="#{price}">かかく</th>
+		</tr>
+		<tr th:each="goods : ${goodsList}">
+			<td th:text="${goods.code}">1</td>
+			<td th:text="${goods.name}">イチゴ</td>
+			<td th:text="${goods.price}">¥100</td>
+		</tr>
+	</table>
+	<div>
+		<a th:href="@{'/goods/menu'}">本社メニューへ</a>
+	</div>
+	<footer>
+		<address>Copyright(C)20xx ぬる商事 Allright Reserved.</address>
+	</footer>
+</body>
+</html>

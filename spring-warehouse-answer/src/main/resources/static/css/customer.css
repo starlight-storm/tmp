@@ -1,0 +1,123 @@
+@charset "utf-8";
+
+body {
+	font: 14px/1.6 "Hiragino Kaku Gothic Pro", Osaka, "メイリオ", "ＭＳ Ｐゴシック",
+		"MS PGothic", Verdana, Arial, sans-serif;
+	margin: 0;
+	color: #313131;
+}
+
+h1 {
+position: relative;
+color: #158b2b;
+font-size: 20px;
+padding: 10px 0;
+text-align: center;
+margin: 1.5em 0;
+}
+
+h1:before {
+content: "";
+position: absolute;
+top: -8px;
+left: 50%;
+width: 150px;
+height: 58px;
+border-radius: 50%;
+border: 5px solid #a6ddb0;
+border-left-color: transparent;
+border-right-color: transparent;
+-moz-transform: translateX(-50%);
+-webkit-transform: translateX(-50%);
+-ms-transform: translateX(-50%);
+transform: translateX(-50%);
+}
+
+a {
+	color: blue;
+	-webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+	transition: all 0.5s;
+}
+
+a:visited {
+	color: blue;
+	-webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+	transition: all 0.5s;
+}
+
+a:hover {
+	color: #F5A862;
+	-webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+	transition: all 0.5s;
+}
+
+dl {
+    border-bottom:1px solid #ccc;
+    border-left:1px solid #ccc;
+    border-right:1px solid #ccc;
+    background-color:#ddeeff;
+    margint:5px;
+    margin-left:auto;
+    margin-right:auto;
+}
+dl dt {
+    float:left;
+    clear: left;
+    width:120px;
+    font-weight:bold;
+    background-color:#ddeeff;
+    border-top:1px solid #ccc;
+    padding:5px;
+}
+dl dd {
+    background-color:#ffffff;
+    border-top:1px solid #ccc;
+    margin-left:130px;  
+    padding:5px;
+}
+
+dl dd span {
+    color: #ff6633;
+}
+
+table {
+	border-collapse: collapse;
+	text-align: left;
+	line-height: 1.5;
+	margin-left:auto;
+	margin-right:auto;
+}
+table thead th {
+	padding: 10px;
+	font-weight: bold;
+	vertical-align: top;
+	text-align: center;
+	color: #369;
+	border-bottom: 3px solid #036;
+	background-color:#ddeeff;
+}
+table tbody th {
+	width: 100px;
+	padding: 10px;
+	font-weight: bold;
+	vertical-align: top;
+	border-bottom: 1px solid #ccc;
+	background: #f3f6f7;
+}
+table td {
+	width: auto;
+	padding: 10px;
+	vertical-align: top;
+	border-bottom: 1px solid #ccc;
+}
+
+.color {
+	background: #DDF1F4;
+}
+
+th.hover {
+	background: #FFCCCC;
+}

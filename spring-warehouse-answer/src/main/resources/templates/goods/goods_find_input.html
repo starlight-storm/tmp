@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<link href="/css/reset.css" th:href="@{/css/reset.css}" rel="stylesheet"></link>
+<link href="/css/warehouse.css" th:href="@{/css/warehouse.css}" rel="stylesheet"></link>
+<title th:text="#{title.goods.find.input}">しょうひん検索画面（入力）</title>
+</head>
+<body th:object="${goodsCode}">
+	<header>
+		<h1 th:text="#{header.goods}">ぬる商事 ほんしゃ</h1>
+	</header>
+	<form method="get" th:action="@{/goods/${code}}">
+		<span th:if="${#fields.hasGlobalErrors()}">
+			<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">例外エラー</p>
+		</span>
+		<div>
+			<span th:if="${#fields.hasErrors('code')}">
+				<p th:errors="*{code}">Name Error</p>
+			</span>
+			<ul>
+				<li><label> 
+				<span th:text="#{code}">しょうひんコード</span> 
+				<input type="text" name="code" th:value="${code}" placeholder="数字を入力" />
+				</label></li>
+			</ul>
+
+			<br />
+			<input type="submit" th:value="#{label.confirm}" value="かくにん"/><br /> <br />
+			<a th:href="@{'/goods/menu'}" >本社メニューへ</a>
+		</div>
+	</form>
+	<footer>
+		<address>Copyright(C)20xx ぬる商事 Allright Reserved.</address>
+	</footer>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8"/>
+<link href="/css/reset.css" th:href="@{/css/reset.css}" rel="stylesheet"></link>
+<link href="/css/warehouse.css" th:href="@{/css/warehouse.css}" rel="stylesheet"></link>
+<title th:text="#{title.goods.create.input}">しょうひん登録画面（入力）</title>
+</head>
+<body th:object="${goods}">
+	<header>
+		<h1 th:text="#{header.goods}">ぬる商事 ほんしゃ</h1>
+	</header>
+	<form method="post" th:action="@{/goods/{code}(code=${code})/create/confirm}">
+		<div>
+			<span th:if="${#fields.hasGlobalErrors()}">
+				<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">例外エラー</p>
+			</span>
+			<span th:if="${#fields.hasErrors('code')}"><p th:errors="*{code}">Name Error</p></span>
+			<span th:if="${#fields.hasErrors('name')}"><p th:errors="*{name}">Name Error</p></span>
+			<span th:if="${#fields.hasErrors('price')}"><p th:errors="*{price}">Name Error</p></span>
+			<ul>
+				<li>
+					<label>
+						<span th:text="#{code}">しょうひんコード</span>
+						<input type="text" name="code" th:value="${code}" placeholder="数字を入力" />
+					</label>
+				</li>
+				<li>
+					<label>
+						<span th:text="#{name}">しょうひん名</span>
+						<input type="text" name="name" th:value="${name}" placeholder="文字列を入力" />
+					</label>
+				</li>
+				<li>
+					<label>
+						<span th:text="#{price}">かかく</span>
+						<input type="text" name="price" th:value="*{price}" placeholder="数字を入力" />
+					</label>
+				</li>
+			</ul>
+
+			<br/>
+			<input type="submit" th:value="#{label.confirm}" value="かくにん" /><br/>
+			<br/> <a th:href="@{'/goods/menu'}">本社メニューへ</a>
+		</div>
+	</form>
+	<footer>
+		<address>Copyright(C)20xx ぬる商事 Allright Reserved.</address>
+	</footer>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8"/>
+<link href="/css/reset.css" th:href="@{/css/reset.css}" rel="stylesheet"></link>
+<link href="/css/warehouse.css" th:href="@{/css/warehouse.css}" rel="stylesheet"></link>
+<title th:text="#{title.goods.delete.complete}">しょうひん削除画面（完了）</title>
+</head>
+<body th:object="${goods}">
+	<header>
+		<h1 th:text="#{header.goods}">ぬる商事 ほんしゃ</h1>
+	</header>
+	<form method="get" action="/goods/delete/input">
+		<p>以下の商品を削除しました。</p>
+		<br/>
+		<table>
+			<tr>
+				<th th:text="#{code}">しょうひんコード</th>
+				<td th:text="*{code}">200</td>
+			</tr>
+			<tr>
+				<th th:text="#{name}">しょうひん名</th>
+				<td th:text="*{name}">イチジク</td>
+			</tr>
+			<tr>
+				<th th:text="#{price}">かかく</th>
+				<td th:text="*{price}">¥100</td>
+			</tr>
+		</table>
+		<div>
+			<br/> <input type="submit" th:value="#{label.ok}" value="りょうかい" /><br/> <br/>
+			<a th:href="@{'/goods/menu'}">本社メニューへ</a>
+		</div>
+	</form>
+	<footer>
+		<address>Copyright(C)20xx ぬる商事 Allright Reserved.</address>
+	</footer>
+</body>
+</html>
