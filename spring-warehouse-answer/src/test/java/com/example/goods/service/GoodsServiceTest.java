@@ -24,8 +24,6 @@ import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
 
-
-// TODO: コメントアウトしているテストの実施
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @TestExecutionListeners({
@@ -44,9 +42,9 @@ public class GoodsServiceTest {
 	public void testFindGoods_正常系() throws Exception {
 		Goods goods = goodsService.findGoods(1);
 
-		assertEquals(1, goods.getCode());
+		assertEquals(new Integer(1), goods.getCode());
 		assertEquals("いちご", goods.getName());
-		assertEquals(350, goods.getPrice());
+		assertEquals(new Integer(350), goods.getPrice());
 	}
 
 	@Test
@@ -69,25 +67,25 @@ public class GoodsServiceTest {
 		if (goodsList.size() != 5)	fail();
 
 		Goods goods = goodsList.get(0);
-		assertEquals(0, goods.getCode());
+		assertEquals(new Integer(0), goods.getCode());
 		assertEquals("りんご", goods.getName());
-		assertEquals(100, goods.getPrice());
+		assertEquals(new Integer(100), goods.getPrice());
 		goods = goodsList.get(1);
-		assertEquals(1, goods.getCode());
+		assertEquals(new Integer(1), goods.getCode());
 		assertEquals("いちご", goods.getName());
-		assertEquals(350, goods.getPrice());
+		assertEquals(new Integer(350), goods.getPrice());
 		goods = goodsList.get(2);
-		assertEquals(2, goods.getCode());
+		assertEquals(new Integer(2), goods.getCode());
 		assertEquals("白菜", goods.getName());
-		assertEquals(90, goods.getPrice());
+		assertEquals(new Integer(90), goods.getPrice());
 		goods = goodsList.get(3);
-		assertEquals(6, goods.getCode());
+		assertEquals(new Integer(6), goods.getCode());
 		assertEquals("クレヨン", goods.getName());
-		assertEquals(1280, goods.getPrice());
+		assertEquals(new Integer(1280), goods.getPrice());
 		goods = goodsList.get(4);
-		assertEquals(7, goods.getCode());
+		assertEquals(new Integer(7), goods.getCode());
 		assertEquals("サインペン", goods.getName());
-		assertEquals(50, goods.getPrice());
+		assertEquals(new Integer(50), goods.getPrice());
 	}
 
 	@Test

@@ -11,7 +11,7 @@
 		<h1 th:text="#{header.goods}">ぬる商事 ほんしゃ</h1>
 	</header>
 	<div th:if="${#fields.hasGlobalErrors()}">
-		<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">エラーメッセージ表示エリア</p>
+		<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">例外エラー</p>
 	</div>
 	<table>
 		<tr>

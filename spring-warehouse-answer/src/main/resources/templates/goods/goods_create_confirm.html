@@ -11,10 +11,7 @@
 		<h1 th:text="#{header.goods}">ぬる商事 ほんしゃ</h1>
 	</header>
 	<form method="post" th:action="@{/goods/{code}(code=${code})/create/complete}">
-		<p>
-			以下の商品を登録します。<br/> よろしいですか？
-		</p>
-		<br/>
+		<p>以下の商品を登録します。<br/> よろしいですか？</p><br/>
 		<table>
 			<tr>
 				<th th:text="#{code}">しょうひんコード</th>

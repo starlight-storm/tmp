@@ -11,18 +11,18 @@
 		<h1 th:text="#{header.goods}">ぬる商事 ほんしゃ</h1>
 	</header>
 	<form method="post" th:action="@{/goods/{code}(code=${code})/delete/confirm}">
+		<div th:if="${#fields.hasGlobalErrors()}">
+			<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">例外エラー</p>
+		</div>
+		<div th:if="${#fields.hasErrors('code')}">
+			<p th:errors="*{code}">Code Error</p>
+		</div>
 		<div>
-			<span th:if="${#fields.hasGlobalErrors()}">
-				<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">例外エラー</p>
-			</span>
-			<span th:if="${#fields.hasErrors('code')}">
-				<p th:errors="*{code}">Name Error</p>
-			</span>
 			<ul>
 				<li>
 					<label>
 						<span th:text="#{code}">しょうひんコード</span>
-						<input type="text" name="code" th:value="${code}" placeholder="数字を入力" />
+						<input type="text" name="code" th:value="*{code}" placeholder="数字を入力" />
 					</label>
 				</li>
 			</ul>
