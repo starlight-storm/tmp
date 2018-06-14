@@ -28,15 +28,12 @@ public class GoodsDeleteController {
 	
 	@GetMapping("/delete/input")
 	public String input(GoodsCode goodsCode) {
-		System.out.println("***** input *****");
 		return "/goods/goods_delete_input";
 	}
 	
 	@PostMapping("/{code}/delete/confirm")
 	public String confirm(@Valid GoodsCode goodsCode, Errors errors, Model model) {
-		System.out.println("***** confirm *****");
 		if (errors.hasErrors()) {
-			System.out.println("***** confirm : hasErrors *****");
             return "/goods/goods_delete_input";
         }
 
@@ -57,16 +54,13 @@ public class GoodsDeleteController {
 	
     @GetMapping("/{code}/delete/confirmed")
     public String confirmed() {
-    		System.out.println("***** deleteConfirm *****");
         return "/goods/goods_delete_confirm";
     }
     
     @PostMapping("/{code}/delete/complete")
     public String complete(Goods goods, Errors errors) {
 		int goodsCode = goods.getCode();
-		
-		System.out.println("***** complete: " + goodsCode + "*****");
-		
+
 		try {
 			goodsService.deleteGoods(goodsCode);
 		} catch (NoGoodsException e) {

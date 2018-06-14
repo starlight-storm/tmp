@@ -22,13 +22,13 @@ public class GoodsFindController {
 	
 	@GetMapping("/find/input")
 	public String input(GoodsCode goodsCode) {
-		return "goods/goods_find_input";
+		return "/goods/goods_find_input";
 	}
 
 	@GetMapping("/{code}")
 	public String complete(@Valid GoodsCode goodsCode, Errors errors, Model model) {
 		if (errors.hasErrors()) {
-	        return "goods/goods_find_input";
+	        return "/goods/goods_find_input";
 	    }
 		
 		try {
@@ -37,7 +37,7 @@ public class GoodsFindController {
 			return "goods/goods_find_complete";
 		} catch (NoGoodsException e) {
 			errors.reject("errors.goods.data.notfound");
-			return "goods/goods_find_input";
+			return "/goods/goods_find_input";
 		}
 	}
 }

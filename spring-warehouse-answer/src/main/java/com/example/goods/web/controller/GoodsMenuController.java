@@ -9,6 +9,6 @@ public class GoodsMenuController {
 	@GetMapping("/goods/menu")
 	public String show(SessionStatus sessionStatus) {
 		sessionStatus.setComplete();
-		return "goods/goods_menu";
+		return "/goods/goods_menu";
 	}
 }

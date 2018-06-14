@@ -25,7 +25,6 @@ import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
 
-//TODO: コメントアウトしているテストの実施
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @TestExecutionListeners({

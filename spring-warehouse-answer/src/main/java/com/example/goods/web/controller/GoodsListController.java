@@ -32,7 +32,7 @@ public class GoodsListController {
 			goodsList = goodsService.findAllGoods();
 			model.addAttribute("goodsList", goodsList);
 		} catch (NoGoodsException e) {
-			errors.reject("errors.goods.data.notfound"); // TODO: 試してない
+			errors.reject("errors.goods.data.notfound");
 		}
 		return "/goods/goods_list";
 	}
