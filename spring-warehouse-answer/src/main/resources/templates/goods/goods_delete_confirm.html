@@ -11,8 +11,7 @@
 	<header>
 		<h1 th:text="#{header.goods}">ぬる商事 ほんしゃ</h1>
 	</header>
-	<form method="post"
-		th:action="@{/goods/{code}(code=${code})/delete/complete}">
+	<form method="post" th:action="@{/goods/{code}(code=${code})/delete/complete}">
 		<p>
 			以下の商品を削除します。<br /> よろしいですか？
 		</p>
@@ -31,10 +30,10 @@
 			</tr>
 		</table>
 		<div>
-			<br /> <input type="submit" th:value="#{label.back}" value="もどる"
-				onclick="history.back(); return false;" /> <input type="submit"
-				th:value="#{label.delete}" value="さくじょ" /> <br /> <br /> <a
-				th:href="@{'/goods/menu'}">本社メニューへ</a>
+			<br />
+			<input type="submit" name="back" th:value="#{label.back}" value="もどる" />
+			<input type="submit" name="delete" th:value="#{label.delete}" value="さくじょ" /> <br /> <br />
+			<a th:href="@{'/goods/menu'}">本社メニューへ</a>
 		</div>
 	</form>
 	<footer>

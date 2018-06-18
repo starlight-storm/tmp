@@ -49,7 +49,7 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 
 	@Transactional(readOnly = true)
-	public boolean canCreateGoods(int goodsCode) throws GoodsCodeDupulicateException, GoodsDeletedException {
+	public void canCreateGoods(int goodsCode) throws GoodsCodeDupulicateException, GoodsDeletedException {
 		try {
 			goodsRepository.findGoods(goodsCode);
 			throw new GoodsCodeDupulicateException();
@@ -57,7 +57,7 @@ public class GoodsServiceImpl implements GoodsService {
 			if(goodsRepository.isGoodsDeactive(goodsCode)) {
 				throw new GoodsDeletedException();
 			}
-			return true;
+			return;
 		}
 	}
 }

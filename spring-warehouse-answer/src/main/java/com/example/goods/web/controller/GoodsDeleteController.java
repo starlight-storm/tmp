@@ -57,7 +57,7 @@ public class GoodsDeleteController {
 		return "/goods/goods_delete_confirm";
 	}
 
-	@PostMapping("/{code}/delete/complete")
+	@PostMapping(value="/{code}/delete/complete", params="delete")
 	public String complete(Goods goods, Errors errors) {
 		int goodsCode = goods.getCode();
 
@@ -71,6 +71,12 @@ public class GoodsDeleteController {
 			return "/goods/goods_delete_input";
 		}
 		return "redirect:/goods/{code}/delete/completed";
+	}
+
+	@PostMapping(value="/{code}/delete/complete", params="back")
+	public String back(GoodsCode goodsCode) {
+		System.out.println("************************** kita!");
+		return "/goods/goods_delete_input";
 	}
 
 	@GetMapping("/{code}/delete/completed")

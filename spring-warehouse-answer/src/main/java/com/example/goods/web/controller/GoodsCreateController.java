@@ -53,7 +53,7 @@ public class GoodsCreateController {
 		return "/goods/goods_create_confirm";
 	}
 
-	@PostMapping("/{code}/create/complete")
+	@PostMapping(value="/{code}/create/complete", params="create")
 	public String complete(Goods goods, Errors errors) {
 		try {
 			goodsService.createGoods(goods);
@@ -65,6 +65,11 @@ public class GoodsCreateController {
 			return "/goods/goods_create_input";
 		}
 		return "redirect:/goods/{code}/create/completed";
+	}
+
+	@PostMapping(value="/{code}/create/complete", params="back")
+	public String back() {
+		return "/goods/goods_create_input";
 	}
 
 	@GetMapping("/{code}/create/completed")
