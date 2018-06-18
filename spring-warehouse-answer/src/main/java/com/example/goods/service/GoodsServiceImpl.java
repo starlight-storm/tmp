@@ -18,43 +18,46 @@ public class GoodsServiceImpl implements GoodsService {
 	private GoodsRepository goodsRepository;
 
 	@Transactional
-	public void createGoods(Goods goods) {
-		if(goodsRepository.isGoodsDeactive(goods.getCode())) {
+	public void createGoods(Goods goods) throws GoodsDeletedException, GoodsCodeDupulicateException {
+		if (goodsRepository.isGoodsDeactive(goods.getCode())) {
 			throw new GoodsDeletedException();
 		}
 		goodsRepository.createGoods(goods);
 	}
 
-	@Transactional(readOnly=true)
-	public List<Goods> findAllGoods() {
+	@Transactional(readOnly = true)
+	public List<Goods> findAllGoods() throws NoGoodsException {
 		return goodsRepository.findAllGoods();
 	}
 
-	@Transactional(readOnly=true)
-	public Goods findGoods(int goodsCode) {
+	@Transactional(readOnly = true)
+	public Goods findGoods(int goodsCode) throws NoGoodsException {
 		return goodsRepository.findGoods(goodsCode);
 	}
 
 	@Transactional
-	public void deleteGoods(int goodsCode) {
-		if(goodsRepository.isGoodsDeactive(goodsCode)) {
+	public void deleteGoods(int goodsCode) throws GoodsDeletedException, NoGoodsException {
+		if (goodsRepository.isGoodsDeactive(goodsCode)) {
 			throw new GoodsDeletedException();
 		}
 		goodsRepository.deleteGoods(goodsCode);
 	}
 
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public boolean isGoodsDeactive(int goodsCode) {
-			return goodsRepository.isGoodsDeactive(goodsCode);
+		return goodsRepository.isGoodsDeactive(goodsCode);
 	}
 
-	@Transactional(readOnly=true)
-	public boolean isGoodsCreate(int goodsCode) {
+	@Transactional(readOnly = true)
+	public boolean canGoodsCreate(int goodsCode) throws GoodsCodeDupulicateException, GoodsDeletedException {
 		try {
 			goodsRepository.findGoods(goodsCode);
 			throw new GoodsCodeDupulicateException();
 		} catch (NoGoodsException e) {
-			return !goodsRepository.isGoodsDeactive(goodsCode);
+			if(goodsRepository.isGoodsDeactive(goodsCode)) {
+				throw new GoodsDeletedException();
+			}
+			return true;
 		}
 	}
 }

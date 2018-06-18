@@ -19,7 +19,7 @@ import com.example.goods.web.modelattribute.GoodsCode;
 public class GoodsFindController {
 	@Autowired
 	private GoodsService goodsService;
-	
+
 	@GetMapping("/find/input")
 	public String input(GoodsCode goodsCode) {
 		return "/goods/goods_find_input";
@@ -28,9 +28,9 @@ public class GoodsFindController {
 	@GetMapping("/{code}")
 	public String complete(@Valid GoodsCode goodsCode, Errors errors, Model model) {
 		if (errors.hasErrors()) {
-	        return "/goods/goods_find_input";
-	    }
-		
+			return "/goods/goods_find_input";
+		}
+
 		try {
 			Goods goods = goodsService.findGoods(goodsCode.getCode());
 			model.addAttribute("goods", goods);

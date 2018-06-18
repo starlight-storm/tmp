@@ -1,8 +1,6 @@
 package com.example.goods.repository;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -27,12 +25,8 @@ import com.github.springtestdbunit.annotation.ExpectedDatabase;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@TestExecutionListeners({
-	  DependencyInjectionTestExecutionListener.class,
-	  DirtiesContextTestExecutionListener.class,
-	  TransactionalTestExecutionListener.class,
-	  DbUnitTestExecutionListener.class
-	})
+@TestExecutionListeners({ DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class,
+		TransactionalTestExecutionListener.class, DbUnitTestExecutionListener.class })
 @DatabaseSetup("/data/goods/INPUT_GOODS_DATA.xml")
 public class GoodsRepositoryTest {
 
@@ -78,7 +72,8 @@ public class GoodsRepositoryTest {
 	public void testFindAllGoods_正常系() throws Exception {
 		List<Goods> goodsList = goodsRepository.findAllGoods();
 
-		if (goodsList.size() != 5) fail();
+		if (goodsList.size() != 5)
+			fail();
 
 		Goods goods = goodsList.get(0);
 		assertEquals(new Integer(0), goods.getCode());
@@ -191,7 +186,7 @@ public class GoodsRepositoryTest {
 	@Test
 	public void testIsDeleteGoods_正常系_未削除() throws SQLException {
 		boolean ans = goodsRepository.isGoodsDeactive(0);
-		if(!ans) {
+		if (!ans) {
 			assertTrue(true);
 			return;
 		}
@@ -201,7 +196,7 @@ public class GoodsRepositoryTest {
 	@Test
 	public void testIsDeleteGoods_正常系_削除済() throws SQLException {
 		boolean ans = goodsRepository.isGoodsDeactive(4);
-		if(ans) {
+		if (ans) {
 			assertTrue(true);
 			return;
 		}

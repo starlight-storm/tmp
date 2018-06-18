@@ -20,14 +20,14 @@ import com.example.goods.service.GoodsService;
 public class GoodsListController {
 	@Autowired
 	private GoodsService goodsService;
-	
+
 	@ModelAttribute
 	public List<Goods> setGoodsList() {
-	    return new ArrayList<Goods>();
+		return new ArrayList<Goods>();
 	}
 
 	@GetMapping("/find/list")
-	public String complete(List<Goods> goodsList, Errors errors, Model model) {
+	public String show(List<Goods> goodsList, Errors errors, Model model) {
 		try {
 			goodsList = goodsService.findAllGoods();
 			model.addAttribute("goodsList", goodsList);

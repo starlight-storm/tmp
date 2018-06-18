@@ -21,55 +21,55 @@ import com.example.goods.service.GoodsService;
 @RequestMapping("/goods")
 @SessionAttributes("goods")
 public class GoodsCreateController {
-	
+
 	@Autowired
 	private GoodsService goodsService;
-	
+
 	@GetMapping("/create/input")
 	public String input(Goods goods, Model model) {
 		model.addAttribute("goods", goods);
 		return "/goods/goods_create_input";
 	}
-	
+
 	@PostMapping("/{code}/create/confirm")
 	public String confirm(@Valid Goods goods, Errors errors) {
 		if (errors.hasErrors()) {
-            return "/goods/goods_create_input";
-        }
+			return "/goods/goods_create_input";
+		}
 		try {
-			if(!goodsService.isGoodsCreate(goods.getCode())) {
-				errors.reject("errors.goods.data.deleted");
-				return "/goods/goods_create_input";
-			}
+			goodsService.canGoodsCreate(goods.getCode());
+			return "redirect:/goods/{code}/create/confirmed";
+		} catch (GoodsDeletedException deletedException) {
+			errors.reject("errors.goods.data.deleted");
+			return "/goods/goods_create_input";
+		} catch (GoodsCodeDupulicateException dupulicateException) {
+			errors.reject("errors.goods.data.duplicate");
+			return "/goods/goods_create_input";
+		}
+	}
+
+	@GetMapping("/{code}/create/confirmed")
+	public String confirmed() {
+		return "/goods/goods_create_confirm";
+	}
+
+	@PostMapping("/{code}/create/complete")
+	public String complete(Goods goods, Errors errors) {
+		try {
+			goodsService.createGoods(goods);
+		} catch (GoodsDeletedException e) {
+			errors.reject("errors.goods.data.deleted");
+			return "/goods/goods_create_input";
 		} catch (GoodsCodeDupulicateException e) {
 			errors.reject("errors.goods.data.duplicate");
 			return "/goods/goods_create_input";
 		}
-		return "redirect:/goods/{code}/create/confirmed";
+		return "redirect:/goods/{code}/create/completed";
 	}
-	
-    @GetMapping("/{code}/create/confirmed")
-    public String confirmed() {
-        return "/goods/goods_create_confirm";
-    }
-	
-	@PostMapping("/{code}/create/complete")
-	public String complete(Goods goods, Errors errors) {
-			try {
-				goodsService.createGoods(goods);
-			} catch (GoodsDeletedException e) {
-				errors.reject("errors.goods.data.deleted");
-				return "/goods/goods_create_input";
-			} catch (GoodsCodeDupulicateException e) {
-				errors.reject("errors.goods.data.duplicate");
-				return "/goods/goods_create_input";
-			}
-			return "redirect:/goods/{code}/create/completed";
+
+	@GetMapping("/{code}/create/completed")
+	public String completed(SessionStatus sessionStatus) {
+		sessionStatus.setComplete();
+		return "/goods/goods_create_complete";
 	}
-	
-    @GetMapping("/{code}/create/completed")
-    public String completed(SessionStatus sessionStatus) {
-        sessionStatus.setComplete();
-        return "/goods/goods_create_complete";
-    }
 }

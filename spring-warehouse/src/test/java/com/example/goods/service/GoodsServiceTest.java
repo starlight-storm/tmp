@@ -1,8 +1,6 @@
 package com.example.goods.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.util.List;
 
@@ -26,12 +24,8 @@ import com.github.springtestdbunit.annotation.ExpectedDatabase;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@TestExecutionListeners({
-	  DependencyInjectionTestExecutionListener.class,
-	  DirtiesContextTestExecutionListener.class,
-	  TransactionalTestExecutionListener.class,
-	  DbUnitTestExecutionListener.class
-	})
+@TestExecutionListeners({ DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class,
+		TransactionalTestExecutionListener.class, DbUnitTestExecutionListener.class })
 @DatabaseSetup("/data/goods/INPUT_GOODS_DATA.xml")
 public class GoodsServiceTest {
 
@@ -64,7 +58,8 @@ public class GoodsServiceTest {
 	public void testFindAllGoods_正常系() throws Exception {
 		List<Goods> goodsList = goodsService.findAllGoods();
 
-		if (goodsList.size() != 5)	fail();
+		if (goodsList.size() != 5)
+			fail();
 
 		Goods goods = goodsList.get(0);
 		assertEquals(new Integer(0), goods.getCode());
@@ -202,7 +197,7 @@ public class GoodsServiceTest {
 	@DatabaseSetup("/data/goods/INPUT_GOODS_DATA.xml")
 	public void testIsCreateGoods_正常系() {
 		try {
-			if (goodsService.isGoodsCreate(8)) {
+			if (goodsService.canGoodsCreate(8)) {
 				assertTrue(true);
 				return;
 			}
@@ -215,7 +210,7 @@ public class GoodsServiceTest {
 	@Test
 	public void testIsCreateGoods_異常系_削除済みの商品コード() {
 		try {
-			if (goodsService.isGoodsCreate(3)) {
+			if (goodsService.canGoodsCreate(3)) {
 				fail();
 			} else {
 				assertTrue(true);
@@ -230,7 +225,7 @@ public class GoodsServiceTest {
 	@Test
 	public void testIsCreateGoods_異常系_登録済みの商品コード() {
 		try {
-			goodsService.isGoodsCreate(0);
+			goodsService.canGoodsCreate(0);
 		} catch (GoodsCodeDupulicateException e) {
 			assertTrue(true);
 			return;

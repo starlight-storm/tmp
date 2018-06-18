@@ -13,11 +13,11 @@ import com.example.goods.service.GoodsRepository;
 
 @Repository
 public class GoodsRepositoryImpl implements GoodsRepository {
-	
+
 	@Autowired
 	private GoodsMapper goodsMapper;
-	
-	public void createGoods(Goods goods) {
+
+	public void createGoods(Goods goods) throws GoodsCodeDupulicateException {
 		try {
 			goodsMapper.createGoods(goods);
 		} catch (DuplicateKeyException e) {
@@ -25,22 +25,24 @@ public class GoodsRepositoryImpl implements GoodsRepository {
 		}
 	}
 
-	public List<Goods> findAllGoods() {
+	public List<Goods> findAllGoods() throws NoGoodsException {
 		List<Goods> goodsList = goodsMapper.findAllGoods();
-		if (goodsList.isEmpty()) throw new NoGoodsException();
+		if (goodsList.isEmpty())
+			throw new NoGoodsException();
 		return goodsList;
 	}
 
-	public Goods findGoods(int goodsCode) {
+	public Goods findGoods(int goodsCode) throws NoGoodsException {
 		Goods goods = goodsMapper.findGoods(goodsCode);
-		if (goods == null) throw new NoGoodsException();
+		if (goods == null)
+			throw new NoGoodsException();
 		return goods;
 	}
 
 	@Override
-	public void deleteGoods(int goodsCode) {
+	public void deleteGoods(int goodsCode) throws NoGoodsException {
 		int count = goodsMapper.deleteGoods(goodsCode);
-		if(count == 0) {
+		if (count == 0) {
 			throw new NoGoodsException();
 		}
 	}
@@ -48,7 +50,8 @@ public class GoodsRepositoryImpl implements GoodsRepository {
 	@Override
 	public boolean isGoodsDeactive(int goodsCode) {
 		int count = goodsMapper.getGoodsDeactiveCount(goodsCode);
-		if (count == 0) return false;
+		if (count == 0)
+			return false;
 		return true;
 	}
 }

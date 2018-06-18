@@ -22,43 +22,43 @@ import com.example.goods.web.modelattribute.GoodsCode;
 @RequestMapping("/goods")
 @SessionAttributes("goods")
 public class GoodsDeleteController {
-	
+
 	@Autowired
 	private GoodsService goodsService;
-	
+
 	@GetMapping("/delete/input")
 	public String input(GoodsCode goodsCode) {
 		return "/goods/goods_delete_input";
 	}
-	
+
 	@PostMapping("/{code}/delete/confirm")
 	public String confirm(@Valid GoodsCode goodsCode, Errors errors, Model model) {
 		if (errors.hasErrors()) {
-            return "/goods/goods_delete_input";
-        }
+			return "/goods/goods_delete_input";
+		}
+
+		if (goodsService.isGoodsDeactive(goodsCode.getCode())) {
+			errors.reject("errors.goods.data.deleted");
+			return "/goods/goods_delete_input";
+		}
 
 		try {
-			if(goodsService.isGoodsDeactive(goodsCode.getCode())) {
-				errors.reject("errors.goods.data.deleted");
-				return "/goods/goods_delete_input";
-			}
+			Goods goods = goodsService.findGoods(goodsCode.getCode());
+			model.addAttribute("goods", goods);
+			return "redirect:/goods/{code}/delete/confirmed";
 		} catch (NoGoodsException e) {
 			errors.reject("errors.goods.data.notfound");
 			return "/goods/goods_delete_input";
 		}
-
-		Goods goods = goodsService.findGoods(goodsCode.getCode());
-		model.addAttribute("goods", goods);
-		return "redirect:/goods/{code}/delete/confirmed";
 	}
-	
-    @GetMapping("/{code}/delete/confirmed")
-    public String confirmed() {
-        return "/goods/goods_delete_confirm";
-    }
-    
-    @PostMapping("/{code}/delete/complete")
-    public String complete(Goods goods, Errors errors) {
+
+	@GetMapping("/{code}/delete/confirmed")
+	public String confirmed() {
+		return "/goods/goods_delete_confirm";
+	}
+
+	@PostMapping("/{code}/delete/complete")
+	public String complete(Goods goods, Errors errors) {
 		int goodsCode = goods.getCode();
 
 		try {
@@ -71,11 +71,11 @@ public class GoodsDeleteController {
 			return "/goods/goods_delete_input";
 		}
 		return "redirect:/goods/{code}/delete/completed";
-    }
-    
-    @GetMapping("/{code}/delete/completed")
-    public String completed(SessionStatus sessionStatus) {
-        sessionStatus.setComplete();
-        return "/goods/goods_delete_complete";
-    }
+	}
+
+	@GetMapping("/{code}/delete/completed")
+	public String completed(SessionStatus sessionStatus) {
+		sessionStatus.setComplete();
+		return "/goods/goods_delete_complete";
+	}
 }

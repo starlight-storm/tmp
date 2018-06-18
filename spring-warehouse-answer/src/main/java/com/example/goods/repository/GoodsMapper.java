@@ -20,11 +20,12 @@ public interface GoodsMapper {
 
 	@Select("SELECT CODE, NAME, PRICE FROM GOODS WHERE STATUS = '" + ACTIVE + "'")
 	List<Goods> findAllGoods();
-	
+
 	@Select("SELECT CODE, NAME, PRICE FROM GOODS WHERE CODE = #{goodsCode} AND STATUS = '" + ACTIVE + "'")
 	Goods findGoods(int goodsCode);
 
-	@Update("UPDATE GOODS SET STATUS = '" + DEACTIVE + "'" + " WHERE  CODE = #{goodsCode} AND STATUS = '" + ACTIVE + "'")
+	@Update("UPDATE GOODS SET STATUS = '" + DEACTIVE + "'" + " WHERE  CODE = #{goodsCode} AND STATUS = '" + ACTIVE
+			+ "'")
 	int deleteGoods(int goodsCode);
 
 	@Select("SELECT COUNT(*) FROM GOODS WHERE CODE = #{goodsCode} AND STATUS = '" + DEACTIVE + "'")
