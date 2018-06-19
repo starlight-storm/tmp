@@ -11,7 +11,7 @@
 	<header>
 		<h1 th:text="#{header.goods}">ぬる商事 ほんしゃ</h1>
 	</header>
-	<form method="get" action="/goods/create/input">
+	<form method="get" th:action="@{/goods/create/input}">
 		<p>以下の商品を登録しました。</p>
 		<br />
 		<table>

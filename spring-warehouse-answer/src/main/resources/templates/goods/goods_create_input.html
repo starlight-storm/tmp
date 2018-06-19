@@ -12,7 +12,7 @@
 		<h1 th:text="#{header.goods}">ぬる商事 ほんしゃ</h1>
 	</header>
 	<form method="post"
-		th:action="@{/goods/{code}(code=${code})/create/confirm}"
+		th:action="@{/goods/{code}(code=${code})/create/confirm}" 
 		th:object="${goods}">
 		<div th:if="${#fields.hasGlobalErrors()}">
 			<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">例外エラー</p>
