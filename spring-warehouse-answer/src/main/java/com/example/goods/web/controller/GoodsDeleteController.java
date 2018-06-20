@@ -20,7 +20,7 @@ import com.example.goods.web.modelattribute.GoodsCode;
 
 @Controller
 @RequestMapping("/goods")
-@SessionAttributes("goods")
+@SessionAttributes({"goods", "goodsCode"})
 public class GoodsDeleteController {
 
 	@Autowired
@@ -74,8 +74,7 @@ public class GoodsDeleteController {
 	}
 
 	@PostMapping(value="/{code}/delete/complete", params="back")
-	public String back(GoodsCode goodsCode) {
-		System.out.println("************************** kita!");
+	public String back() {
 		return "/goods/goods_delete_input";
 	}
 

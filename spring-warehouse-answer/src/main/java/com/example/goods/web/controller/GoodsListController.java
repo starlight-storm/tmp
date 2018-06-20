@@ -1,15 +1,14 @@
 package com.example.goods.web.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.goods.domain.Goods;
 import com.example.goods.exception.NoGoodsException;
@@ -22,14 +21,20 @@ public class GoodsListController {
 	private GoodsService goodsService;
 
 	@ModelAttribute
-	public List<Goods> setGoodsList() {
-		return new ArrayList<Goods>();
+	public PagedListHolder<Goods> setGoodsList() {
+		return new PagedListHolder<>();
 	}
 
+	private static int PAGE_SIZE = 3;
+	
 	@GetMapping("/find/list")
-	public String show(List<Goods> goodsList, Errors errors, Model model) {
+	public String show(@RequestParam(value = "page", defaultValue = "0") String page, PagedListHolder<Goods> goodsList, Errors errors, Model model) {
 		try {
-			goodsList = goodsService.findAllGoods();
+			//goodsList = goodsService.findAllGoods();
+			
+			goodsList = new PagedListHolder<>(goodsService.findAllGoods());
+			goodsList.setPage(Integer.parseInt(page));
+			goodsList.setPageSize(PAGE_SIZE);
 			model.addAttribute("goodsList", goodsList);
 		} catch (NoGoodsException e) {
 			errors.reject("errors.goods.data.notfound");

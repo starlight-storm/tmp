@@ -11,22 +11,30 @@
 	<header>
 		<h1 th:text="#{header.goods}">ぬる商事 ほんしゃ</h1>
 	</header>
+
 	<div th:if="${#fields.hasGlobalErrors()}">
 		<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">例外エラー</p>
 	</div>
+
 	<table>
 		<tr>
 			<th th:text="#{code}">しょうひんコード</th>
 			<th th:text="#{name}">しょうひん名</th>
 			<th th:text="#{price}">かかく</th>
 		</tr>
-		<tr th:each="goods : ${goodsList}">
+		<tr th:each="goods : ${goodsList.pageList}">
 			<td th:text="${goods.code}">1</td>
 			<td th:text="${goods.name}">イチゴ</td>
 			<td th:text="${goods.price}">¥100</td>
 		</tr>
 	</table>
 	<div>
+		<a th:if="${!goodsList.firstPage}"
+			th:href="@{/goods/find/list(page=${goodsList.page - 1})}">Previous</a> 
+		<span th:text="${goodsList.page + 1}">1</span>
+		<a th:if="${!goodsList.lastPage}"
+			th:href="@{/goods/find/list(page=${goodsList.page + 1})}">Next</a>
+		<br /><br />
 		<a th:href="@{'/goods/menu'}">本社メニューへ</a>
 	</div>
 	<footer>
