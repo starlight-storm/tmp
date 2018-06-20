@@ -9,4 +9,10 @@ public class MainMenuController {
 	public String home() {
 		return "main_menu";
 	}
+	
+	// 演習用に作ったerror.htmlの表示用のメソッドです。
+	@GetMapping("/sample/error")
+	public String error() {
+		throw new RuntimeException();
+	}
 }
