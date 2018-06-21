@@ -21,17 +21,20 @@
 		</div>
 		<div>
 			<ul>
-				<li><label> <span th:text="#{code}">しょうひんコード</span> <input
-						type="text" name="code" th:field="*{code}" placeholder="数字を入力" />
+				<li><label>
+					<span th:text="#{code}">しょうひんコード</span>
+					<input type="text" name="code" th:field="*{code}" placeholder="数字を入力" />
 				</label></li>
 			</ul>
 
-			<br /> <input type="submit" th:value="#{label.confirm}" value="かくにん" /><br />
-			<br /> <a th:href="@{'/goods/menu'}">本社メニューへ</a>
+			<br />
+			<input type="submit" th:value="#{label.confirm}" value="かくにん" />
+			<br /> <br />
+			<a th:href="@{'/goods/menu'}" th:text="#{label.back.goods.menu}">ほんしゃメニューへ</a>
 		</div>
 	</form>
 	<footer>
-		<address>Copyright(C)20xx ぬる商事 Allright Reserved.</address>
+		<address th:text="#{footer.copyright}">コピーライト(C)20xx ぬる商事 Allright Reserved.</address>
 	</footer>
 </body>
 </html>

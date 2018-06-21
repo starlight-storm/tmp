@@ -12,9 +12,10 @@
 		<h1 th:text="#{header.goods}">ぬる商事 ほんしゃ</h1>
 	</header>
 	<form method="post" th:action="@{/goods/{code}(code=${code})/delete/complete}">
-		<p>
-			以下の商品を削除します。<br /> よろしいですか？
-		</p>
+		<p th:text="#{message.goods.delete.confirm}">以下のしょうひんを削除します。</p>
+		<br />
+		<p th:text="#{message.confirm.question}">ヨロシイですか？</p>
+		<br />
 		<table>
 			<tr>
 				<th th:text="#{code}">しょうひんコード</th>
@@ -32,12 +33,13 @@
 		<div>
 			<br />
 			<input type="submit" name="back" th:value="#{label.back}" value="もどる" />
-			<input type="submit" name="delete" th:value="#{label.delete}" value="さくじょ" /> <br /> <br />
-			<a th:href="@{'/goods/menu'}">本社メニューへ</a>
+			<input type="submit" name="delete" th:value="#{label.delete}" value="さくじょ" />
+			<br /> <br />
+			<a th:href="@{'/goods/menu'}" th:text="#{label.back.goods.menu}">ほんしゃメニューへ</a>
 		</div>
 	</form>
 	<footer>
-		<address>Copyright(C)20xx ぬる商事 Allright Reserved.</address>
+		<address th:text="#{footer.copyright}">コピーライト(C)20xx ぬる商事 Allright Reserved.</address>
 	</footer>
 </body>
 </html>

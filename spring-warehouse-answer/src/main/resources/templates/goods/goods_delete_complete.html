@@ -12,7 +12,7 @@
 		<h1 th:text="#{header.goods}">ぬる商事 ほんしゃ</h1>
 	</header>
 	<form method="get" th:action="@{/goods/delete/input}">
-		<p>以下の商品を削除しました。</p>
+		<p th:text="#{message.goods.delete.complete}">以下のしょうひんを削除しました。</p>
 		<br />
 		<table>
 			<tr>
@@ -29,12 +29,14 @@
 			</tr>
 		</table>
 		<div>
-			<br /> <input type="submit" th:value="#{label.ok}" value="りょうかい" /><br />
-			<br /> <a th:href="@{'/goods/menu'}">本社メニューへ</a>
+			<br />
+			<input type="submit" th:value="#{label.ok}" value="りょうかい" />
+			<br /> <br />
+			<a th:href="@{'/goods/menu'}" th:text="#{label.back.goods.menu}">ほんしゃメニューへ</a>
 		</div>
 	</form>
 	<footer>
-		<address>Copyright(C)20xx ぬる商事 Allright Reserved.</address>
+		<address th:text="#{footer.copyright}">コピーライト(C)20xx ぬる商事 Allright Reserved.</address>
 	</footer>
 </body>
 </html>

@@ -13,17 +13,17 @@
 	</header>
 	<div>
 		<ul>
-			<li><a th:href="@{'/goods/create/input'}">商品登録</a></li>
-			<li><a th:href="@{'/goods/find/list'}">商品一覧</a></li>
-			<li><a th:href="@{'/goods/find/input'}">商品検索</a></li>
-			<li><a th:href="@{'/goods/delete/input'}">商品削除</a></li>
+			<li><a th:href="@{'/goods/create/input'}" th:text="#{label.menu.goods.create}">しょうひん登録</a></li>
+			<li><a th:href="@{'/goods/find/list'}" th:text="#{label.menu.goods.list}">しょうひん一覧</a></li>
+			<li><a th:href="@{'/goods/find/input'}" th:text="#{label.menu.goods.find}">しょうひん検索</a></li>
+			<li><a th:href="@{'/goods/delete/input'}" th:text="#{label.menu.goods.delete}">しょうひん削除</a></li>
 		</ul>
 	</div>
 	<div>
-		<a th:href="@{'/'}">ぬる商事メインメニューへ</a>
+		<a th:href="@{'/'}" th:text="#{label.back.main.menu}">NULL商事めいんメニューへ</a>
 	</div>
 	<footer>
-		<address>Copyright(C)20xx ぬる商事 Allright Reserved.</address>
+		<address th:text="#{footer.copyright}">コピーライト(C)20xx ぬる商事 Allright Reserved.</address>
 	</footer>
 </body>
 </html>

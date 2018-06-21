@@ -5,10 +5,10 @@
 <title th:text="#{title.error}">えらー画面</title>
 </head>
 <body>
-	<h1 th:text="#{header.error}">ぬるしょうじ</h1>
+	<h1 th:text="#{header.company}">ぬるしょうじ</h1>
 	<br />
-	<div>システム障害が発生しました。 管理者に連絡してください。</div>
+	<div th:text="#{error.common.system.error}">System障害が発生しました。 管理者に連絡してください。</div>
 	<br />
-	<address>Copyright(C)20xx ぬる商事 Allright Reserved.</address>
+	<address th:text="#{footer.copyright}">コピーライト(C)20xx ぬる商事 Allright Reserved.</address>
 </body>
 </html>

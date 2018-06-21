@@ -27,12 +27,14 @@
 			</tr>
 		</table>
 		<div>
-			<br /> <input type="submit" th:value="#{label.back}" value="もどる" /><br />
-			<br /> <a th:href="@{'/goods/menu'}">本社メニューへ</a>
+			<br />
+			<input type="submit" th:value="#{label.back}" value="もどる" />
+			<br /> <br />
+			<a th:href="@{'/goods/menu'}" th:text="#{label.back.goods.menu}">ほんしゃメニューへ</a>
 		</div>
 	</form>
 	<footer>
-		<address>Copyright(C)20xx ぬる商事 Allright Reserved.</address>
+		<address th:text="#{footer.copyright}">コピーライト(C)20xx ぬる商事 Allright Reserved.</address>
 	</footer>
 </body>
 </html>

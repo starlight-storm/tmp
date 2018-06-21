@@ -30,15 +30,15 @@
 	</table>
 	<div>
 		<a th:if="${!goodsList.firstPage}"
-			th:href="@{/goods/find/list(page=${goodsList.page - 1})}">Previous</a> 
+			th:href="@{/goods/find/list(page=${goodsList.page - 1})}" th:text="#{label.previous}">Previous</a> 
 		<span th:text="${goodsList.page + 1}">1</span>
 		<a th:if="${!goodsList.lastPage}"
-			th:href="@{/goods/find/list(page=${goodsList.page + 1})}">Next</a>
+			th:href="@{/goods/find/list(page=${goodsList.page + 1})}" th:text="#{label.next}">Next</a>
 		<br /><br />
-		<a th:href="@{'/goods/menu'}">本社メニューへ</a>
+		<a th:href="@{'/goods/menu'}" th:text="#{label.back.goods.menu}">ほんしゃメニューへ</a>
 	</div>
 	<footer>
-		<address>Copyright(C)20xx ぬる商事 Allright Reserved.</address>
+		<address th:text="#{footer.copyright}">コピーライト(C)20xx ぬる商事 Allright Reserved.</address>
 	</footer>
 </body>
 </html>
