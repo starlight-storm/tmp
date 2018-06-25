@@ -17,7 +17,7 @@ public interface GoodsService {
 
 	boolean isGoodsDeactive(int goodsCode);
 
-	void canCreateGoods(int goodsCode) throws GoodsCodeDupulicateException, GoodsDeletedException;
+	void checkGoodsCanCreate(int goodsCode) throws GoodsCodeDupulicateException, GoodsDeletedException;
 
 	void deleteGoods(int goodsCode) throws GoodsDeletedException, NoGoodsException;
 

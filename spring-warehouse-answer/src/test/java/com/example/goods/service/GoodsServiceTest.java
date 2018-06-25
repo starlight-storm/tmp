@@ -196,7 +196,7 @@ public class GoodsServiceTest {
 	@Test
 	public void testCanCreateGoods_正常系() {
 		try {
-			goodsService.canCreateGoods(8);
+			goodsService.checkGoodsCanCreate(8);
 			assertTrue(true);
 			return;
 		} catch (Exception e) {
@@ -208,7 +208,7 @@ public class GoodsServiceTest {
 	@Test
 	public void testCanCreateGoods_異常系_削除済みの商品コード() {
 		try {
-			goodsService.canCreateGoods(3);
+			goodsService.checkGoodsCanCreate(3);
 		} catch (GoodsCodeDupulicateException e) {
 			fail();
 		} catch (GoodsDeletedException e) {
@@ -221,7 +221,7 @@ public class GoodsServiceTest {
 	@Test
 	public void testCanCreateGoods_異常系_登録済みの商品コード() {
 		try {
-			goodsService.canCreateGoods(0);
+			goodsService.checkGoodsCanCreate(0);
 		} catch (GoodsCodeDupulicateException e) {
 			assertTrue(true);
 			return;

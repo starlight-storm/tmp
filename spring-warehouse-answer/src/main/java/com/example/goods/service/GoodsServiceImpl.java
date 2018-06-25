@@ -49,7 +49,7 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 
 	@Transactional(readOnly = true)
-	public void canCreateGoods(int goodsCode) throws GoodsCodeDupulicateException, GoodsDeletedException {
+	public void checkGoodsCanCreate(int goodsCode) throws GoodsCodeDupulicateException, GoodsDeletedException {
 		try {
 			goodsRepository.findGoods(goodsCode);
 			throw new GoodsCodeDupulicateException();

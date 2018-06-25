@@ -37,7 +37,7 @@ public class GoodsCreateController {
 			return "/goods/goods_create_input";
 		}
 		try {
-			goodsService.canCreateGoods(goods.getCode());
+			goodsService.checkGoodsCanCreate(goods.getCode());
 			return "redirect:/goods/{code}/create/confirmed";
 		} catch (GoodsDeletedException deletedException) {
 			errors.reject("errors.goods.data.deleted");
