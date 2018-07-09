@@ -36,13 +36,10 @@ public class GoodsServiceTest {
 //	public void testFindGoods_異常系_存在しない商品コード() {
 //		try {
 //			goodsService.findGoods(777);
+//			fail("Exception not thrown.");
 //		} catch (NoGoodsException e) {
 //			assertTrue(true);
-//			return;
-//		} catch (Exception e) {
-//			fail();
 //		}
-//		fail();
 //	}
 //
 //	@Test
@@ -50,7 +47,7 @@ public class GoodsServiceTest {
 //		List<Goods> goodsList = goodsService.findAllGoods();
 //
 //		if (goodsList.size() != 5)
-//			fail();
+//			fail("正しいサイズではない.");
 //
 //		Goods goods = goodsList.get(0);
 //		assertEquals(new Integer(0), goods.getCode());
@@ -82,11 +79,10 @@ public class GoodsServiceTest {
 //			for (Goods goods : goodsList) {
 //				System.out.println(goods);
 //			}
+//			fail("Exception not thrown.");
 //		} catch (NoGoodsException e) {
 //			assertTrue(true);
-//			return;
 //		}
-//		fail();
 //	}
 //
 //	@Test
@@ -103,27 +99,23 @@ public class GoodsServiceTest {
 //
 //		try {
 //			goodsService.createGoods(goods);
+//			fail("Exception not thrown.");
 //		} catch (GoodsCodeDupulicateException e) {
 //			assertTrue(true);
-//			return;
 //		}
-//		fail();
 //	}
 //
 //	@Test
-//	public void testCreateGoods_異常系_削除済みの商品コードの重複() {
+//	public void testCreateGoods_異常系_削除済みの商品コードの重複() throws GoodsCodeDupulicateException {
 //
 //		Goods goods = new Goods(3, "イチジク", 210);
 //
 //		try {
 //			goodsService.createGoods(goods);
+//			fail("Exception not thrown.");
 //		} catch (GoodsDeletedException e) {
 //			assertTrue(true);
-//			return;
-//		} catch (Exception e) {
-//			fail();
 //		}
-//		fail();
 //	}
 //
 //	@Test
@@ -133,93 +125,67 @@ public class GoodsServiceTest {
 //	}
 //
 //	@Test
-//	public void testDeleteGoods_異常系_存在しない商品コード() {
+//	public void testDeleteGoods_異常系_存在しない商品コード() throws GoodsDeletedException {
 //		try {
 //			goodsService.deleteGoods(1001);
+//			fail("Exception not thrown.");
 //		} catch (NoGoodsException e) {
 //			assertTrue(true);
-//			return;
-//		} catch (Exception e) {
-//			fail();
 //		}
-//		fail();
 //	}
 //
 //	@Test
-//	public void testDeleteGoods_異常系_削除済みの商品コード() {
+//	public void testDeleteGoods_異常系_削除済みの商品コード() throws NoGoodsException {
 //		try {
 //			goodsService.deleteGoods(3);
+//			fail("Exception not thrown.");
 //		} catch (GoodsDeletedException e) {
 //			assertTrue(true);
-//			return;
-//		} catch (Exception e) {
-//			fail();
 //		}
-//		fail();
 //	}
 //
 //	@Test
 //	public void testIsDeactiveGoods_正常系_削除済み() {
-//		try {
-//			if (goodsService.isGoodsDeactive(4)) {
-//				assertTrue(true);
-//				return;
-//			}
-//		} catch (Exception e) {
-//			fail();
+//		if (goodsService.isGoodsDeactive(4)) {
+//			assertTrue(true);
+//		} else {
+//			fail("削除できない.");
 //		}
-//		fail();
 //	}
 //
 //	@Test
 //	public void testIsDeactiveGoods_正常系_コードが存在しない() {
-//		try {
-//			if (!goodsService.isGoodsDeactive(9)) {
-//				assertTrue(true);
-//				return;
-//			}
-//		} catch (Exception e) {
-//			fail();
-//		}
-//		fail();
-//	}
-//
-//	@Test
-//	public void testCanCreateGoods_正常系() {
-//		try {
-//			goodsService.canCreateGoods(8);
+//		if (!goodsService.isGoodsDeactive(9)) {
 //			assertTrue(true);
-//			return;
-//		} catch (Exception e) {
-//			fail();
+//		} else {
+//			fail("存在しないコードが削除された.");
 //		}
-//		fail();
 //	}
 //
 //	@Test
-//	public void testCanCreateGoods_異常系_削除済みの商品コード() {
+//	public void testCanCreateGoods_正常系() throws GoodsCodeDupulicateException, GoodsDeletedException {
+//		goodsService.checkGoodsCanCreate(8);
+//		assertTrue(true);
+//	}
+//
+//	@Test
+//	public void testCanCreateGoods_異常系_削除済みの商品コード() throws GoodsCodeDupulicateException {
 //		try {
-//			goodsService.canCreateGoods(3);
-//		} catch (GoodsCodeDupulicateException e) {
-//			fail();
+//			goodsService.checkGoodsCanCreate(3);
+//			fail("Exception not thrown.");
 //		} catch (GoodsDeletedException e) {
 //			assertTrue(true);
-//			return;
 //		}
-//		fail();
 //	}
 //
 //	@Test
-//	public void testCanCreateGoods_異常系_登録済みの商品コード() {
+//	public void testCanCreateGoods_異常系_登録済みの商品コード() throws GoodsDeletedException {
 //		try {
-//			goodsService.canCreateGoods(0);
+//			goodsService.checkGoodsCanCreate(0);
+//			fail("Exception not thrown.");
 //		} catch (GoodsCodeDupulicateException e) {
 //			assertTrue(true);
-//			return;
-//		} catch (Exception e) {
-//			fail();
 //		}
-//		fail();
 //	}
 
 }

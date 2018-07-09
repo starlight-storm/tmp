@@ -1,6 +1,8 @@
 package com.example.goods.repository;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -46,26 +48,20 @@ public class GoodsRepositoryTest {
 	public void testFindGoods_異常系_存在しない商品コード() {
 		try {
 			goodsRepository.findGoods(777);
+			fail("Exception not thrown.");
 		} catch (NoGoodsException e) {
 			assertTrue(true);
-			return;
-		} catch (Exception e) {
-			fail();
 		}
-		fail();
 	}
 
 	@Test
 	public void testFindGoods_異常系_削除済みの商品コード() {
 		try {
 			goodsRepository.findGoods(3);
+			fail("Exception not thrown.");
 		} catch (NoGoodsException e) {
 			assertTrue(true);
-			return;
-		} catch (Exception e) {
-			fail();
 		}
-		fail();
 	}
 
 	@Test
@@ -73,7 +69,7 @@ public class GoodsRepositoryTest {
 		List<Goods> goodsList = goodsRepository.findAllGoods();
 
 		if (goodsList.size() != 5)
-			fail();
+			fail("正しいサイズではない.");
 
 		Goods goods = goodsList.get(0);
 		assertEquals(new Integer(0), goods.getCode());
@@ -106,10 +102,10 @@ public class GoodsRepositoryTest {
 			for (Goods goods : goodsList) {
 				System.out.println(goods);
 			}
+			fail("Exception not thrown.");
 		} catch (NoGoodsException e) {
-			return;
+			assertTrue(true);
 		}
-		fail();
 	}
 
 	@Test
@@ -126,13 +122,10 @@ public class GoodsRepositoryTest {
 
 		try {
 			goodsRepository.createGoods(goods);
+			fail("Exception not thrown.");
 		} catch (GoodsCodeDupulicateException e) {
 			assertTrue(true);
-			return;
-		} catch (Exception e) {
-			fail();
 		}
-		fail();
 	}
 
 	@Test
@@ -142,13 +135,10 @@ public class GoodsRepositoryTest {
 
 		try {
 			goodsRepository.createGoods(goods);
+			fail("Exception not thrown.");
 		} catch (GoodsCodeDupulicateException e) {
 			assertTrue(true);
-			return;
-		} catch (Exception e) {
-			fail();
 		}
-		fail();
 	}
 
 	@Test
@@ -161,26 +151,20 @@ public class GoodsRepositoryTest {
 	public void testDeleteGoods_異常系_存在しない商品コード() {
 		try {
 			goodsRepository.deleteGoods(1001);
+			fail("Exception not thrown.");
 		} catch (NoGoodsException e) {
 			assertTrue(true);
-			return;
-		} catch (Exception e) {
-			fail();
 		}
-		fail();
 	}
 
 	@Test
 	public void testDeleteGoods_異常系_削除済みの商品コード() {
 		try {
 			goodsRepository.deleteGoods(3);
+			fail("Exception not thrown.");
 		} catch (NoGoodsException e) {
 			assertTrue(true);
-			return;
-		} catch (Exception e) {
-			fail();
 		}
-		fail();
 	}
 
 	@Test
@@ -188,9 +172,9 @@ public class GoodsRepositoryTest {
 		boolean ans = goodsRepository.isGoodsDeactive(0);
 		if (!ans) {
 			assertTrue(true);
-			return;
+		} else {
+			fail("存在しないコードが削除された.");
 		}
-		fail();
 	}
 
 	@Test
@@ -198,9 +182,8 @@ public class GoodsRepositoryTest {
 		boolean ans = goodsRepository.isGoodsDeactive(4);
 		if (ans) {
 			assertTrue(true);
-			return;
+		} else {
+			fail("削除できない.");
 		}
-		fail();
 	}
-
 }
