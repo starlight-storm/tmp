@@ -12,35 +12,56 @@ import com.example.goods.exception.GoodsDeletedException;
 import com.example.goods.exception.NoGoodsException;
 
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class GoodsServiceImpl implements GoodsService {
 
 	@Autowired
 	private GoodsRepository goodsRepository;
 
-	@Transactional
 	public void createGoods(Goods goods) throws GoodsDeletedException, GoodsCodeDupulicateException {
 		if (goodsRepository.isGoodsDeactive(goods.getCode())) {
 			throw new GoodsDeletedException();
 		}
+
+		if (goodsRepository.findGoods(goods.getCode()) != null) {
+			throw new GoodsCodeDupulicateException();
+		}
+
 		goodsRepository.createGoods(goods);
 	}
 
 	@Transactional(readOnly = true)
 	public List<Goods> findAllGoods() throws NoGoodsException {
-		return goodsRepository.findAllGoods();
+		List<Goods> list = goodsRepository.findAllGoods();
+
+		if (list.isEmpty()) {
+			throw new NoGoodsException();
+		}
+
+		return list;
 	}
 
 	@Transactional(readOnly = true)
 	public Goods findGoods(int goodsCode) throws NoGoodsException {
-		return goodsRepository.findGoods(goodsCode);
+		Goods goods = goodsRepository.findGoods(goodsCode);
+
+		if (goods == null) {
+			throw new NoGoodsException();
+		}
+
+		return goods;
 	}
 
-	@Transactional
 	public void deleteGoods(int goodsCode) throws GoodsDeletedException, NoGoodsException {
 		if (goodsRepository.isGoodsDeactive(goodsCode)) {
 			throw new GoodsDeletedException();
 		}
-		goodsRepository.deleteGoods(goodsCode);
+
+		int cnt = goodsRepository.deleteGoods(goodsCode);
+
+		if (cnt == 0) {
+			throw new NoGoodsException();
+		}
 	}
 
 	@Transactional(readOnly = true)
@@ -50,14 +71,14 @@ public class GoodsServiceImpl implements GoodsService {
 
 	@Transactional(readOnly = true)
 	public void checkGoodsCanCreate(int goodsCode) throws GoodsCodeDupulicateException, GoodsDeletedException {
-		try {
-			goodsRepository.findGoods(goodsCode);
+		Goods goods = goodsRepository.findGoods(goodsCode);
+		if (goods != null) {
 			throw new GoodsCodeDupulicateException();
-		} catch (NoGoodsException e) {
-			if(goodsRepository.isGoodsDeactive(goodsCode)) {
-				throw new GoodsDeletedException();
-			}
-			return;
 		}
+
+		if (goodsRepository.isGoodsDeactive(goodsCode)) {
+			throw new GoodsDeletedException();
+		}
+		return;
 	}
 }

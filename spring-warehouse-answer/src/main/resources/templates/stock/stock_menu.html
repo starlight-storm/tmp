@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<link href="/css/reset.css" th:href="@{/css/reset.css}" rel="stylesheet"></link>
+<link href="/css/warehouse.css" th:href="@{/css/warehouse.css}"
+	rel="stylesheet"></link>
+<title th:text="#{title.goods.menu}">在庫管理：めにゅー画面</title>
+</head>
+<body>
+	<header>
+		<h1 th:text="#{header.goods}">ぬる商事 そうこ</h1>
+	</header>
+	<div>
+		<ul>
+			<li><a th:href="@{'/stock/inbound/input'}" th:text="#{label.menu.stock.inbound}">にゅうか</a></li>
+			<li><a th:href="@{'/stock/outbound/input'}" th:text="#{label.menu.stock.outbound}">しゅっか</a></li>
+			<li><a th:href="@{'/inoutbound/history'}" th:text="#{label.menu.inoutbound.list}">入出荷りれき</a></li>
+			<li><a th:href="@{'/stock/find/list'}" th:text="#{label.menu.stock.list}">ざいこ一覧</a></li>
+			<li><a th:href="@{'/stock/find/input'}" th:text="#{label.menu.stock.find}">ざいこ検索</a></li>
+			<li><a th:href="@{'/stock/create/input'}" th:text="#{label.menu.stock.create}">ざいこ商品登録</a></li>
+			<li><a th:href="@{'/stock/delete/input'}" th:text="#{label.menu.stock.delete}">ざいこ商品削除</a></li>
+		</ul>
+	</div>
+	
+	<div>
+		<a th:href="@{'/'}" th:text="#{label.back.main.menu}">NULL商事めいんメニューへ</a>
+	</div>
+	<footer>
+		<address th:text="#{footer.copyright}">コピーライト(C)20xx ぬる商事 Allright Reserved.</address>
+	</footer>
+</body>
+</html>

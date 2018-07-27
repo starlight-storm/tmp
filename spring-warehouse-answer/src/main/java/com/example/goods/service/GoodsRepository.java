@@ -2,18 +2,39 @@ package com.example.goods.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+
 import com.example.goods.domain.Goods;
-import com.example.goods.exception.GoodsCodeDupulicateException;
-import com.example.goods.exception.NoGoodsException;
 
+@Mapper
 public interface GoodsRepository {
-	void createGoods(Goods goods) throws GoodsCodeDupulicateException;
 
-	List<Goods> findAllGoods()  throws NoGoodsException;
+	@Insert("insert into GOODS(CODE, NAME, PRICE, STATUS) "
+			+ "values(#{code}, #{name}, #{price}, 'ACTIVE')")
+	void createGoods(Goods goods);
 
-	Goods findGoods(int goodsCode) throws NoGoodsException;
+	@Select("select * from GOODS where STATUS = 'ACTIVE'")
+	List<Goods> findAllGoods();
 
-	void deleteGoods(int goodsCode) throws NoGoodsException;
+	@Select("select * from GOODS "
+			+ " where CODE = #{goodsCode} and STATUS = 'ACTIVE'")
+	Goods findGoods(int goodsCode);
 
+	@Update("update GOODS set STATUS = 'DEACTIVE' "
+			+ " where CODE = #{goodsCode} and STATUS = 'ACTIVE'")
+	int deleteGoods(int goodsCode);
+
+	@Select("select count(*) = 1 from GOODS "
+			+ " where CODE = #{goodsCode} and STATUS = 'DEACTIVE'")
 	boolean isGoodsDeactive(int goodsCode);
 }
+
+
+
+
+
+
+

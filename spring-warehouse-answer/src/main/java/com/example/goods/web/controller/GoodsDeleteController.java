@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.goods.domain.Goods;
 import com.example.goods.exception.GoodsDeletedException;
@@ -27,29 +29,23 @@ public class GoodsDeleteController {
 	private GoodsService goodsService;
 
 	@GetMapping("/delete/input")
-	public String input(GoodsCode goodsCode) {
+	public String prepare(GoodsCode goodsCode) {
 		return "/goods/goods_delete_input";
 	}
 
 	@PostMapping("/{code}/delete/confirm")
-	public String confirm(@Valid GoodsCode goodsCode, Errors errors, Model model) {
+	public String confirm(@Valid GoodsCode goodsCode, Errors errors, Model model) throws NoGoodsException, GoodsDeletedException {
 		if (errors.hasErrors()) {
 			return "/goods/goods_delete_input";
 		}
 
 		if (goodsService.isGoodsDeactive(goodsCode.getCode())) {
-			errors.reject("errors.goods.data.deleted");
-			return "/goods/goods_delete_input";
+			throw new GoodsDeletedException();
 		}
 
-		try {
-			Goods goods = goodsService.findGoods(goodsCode.getCode());
-			model.addAttribute("goods", goods);
-			return "redirect:/goods/{code}/delete/confirmed";
-		} catch (NoGoodsException e) {
-			errors.reject("errors.goods.data.notfound");
-			return "/goods/goods_delete_input";
-		}
+		Goods goods = goodsService.findGoods(goodsCode.getCode());
+		model.addAttribute("goods", goods);
+		return "redirect:/goods/{code}/delete/confirmed";
 	}
 
 	@GetMapping("/{code}/delete/confirmed")
@@ -58,18 +54,10 @@ public class GoodsDeleteController {
 	}
 
 	@PostMapping(value="/{code}/delete/complete", params="delete")
-	public String complete(Goods goods, Errors errors) {
+	public String complete(Goods goods, Errors errors) throws GoodsDeletedException, NoGoodsException {
 		int goodsCode = goods.getCode();
 
-		try {
-			goodsService.deleteGoods(goodsCode);
-		} catch (NoGoodsException e) {
-			errors.reject("errors.goods.data.notfound");
-			return "/goods/goods_delete_input";
-		} catch (GoodsDeletedException e) {
-			errors.reject("errors.goods.data.deleted");
-			return "/goods/goods_delete_input";
-		}
+		goodsService.deleteGoods(goodsCode);
 		return "redirect:/goods/{code}/delete/completed";
 	}
 
@@ -82,5 +70,17 @@ public class GoodsDeleteController {
 	public String completed(SessionStatus sessionStatus) {
 		sessionStatus.setComplete();
 		return "/goods/goods_delete_complete";
+	}
+	
+	@ExceptionHandler(GoodsDeletedException.class)
+	public String handleGoodsDeleted(RedirectAttributes redirectAttr) {
+	    redirectAttr.addFlashAttribute("errorCode", "errors.goods.data.deleted");
+	    return "redirect:/goods/delete/input";
+	}
+	
+	@ExceptionHandler(NoGoodsException.class)
+	public String handleNoGoods(RedirectAttributes redirectAttr) {
+	    redirectAttr.addFlashAttribute("errorCode", "errors.goods.data.notfound");
+	    return "redirect:/goods/delete/input";
 	}
 }

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<link href="/css/reset.css" th:href="@{/css/reset.css}" rel="stylesheet"></link>
+<link href="/css/warehouse.css" th:href="@{/css/warehouse.css}"
+	rel="stylesheet"></link>
+<title th:text="#{title.stock.inoutbound.list}">入出荷履歴がめん</title>
+</head>
+<body>
+	<header>
+		<h1 th:text="#{header.stock}">ぬる商事 そうこ</h1>
+	</header>
+	<div th:if="${inOutBoundLineList == null}">
+		<p th:text="#{errors.stock.data.inoutbound.notfound}">例外エラー</p>
+	</div>
+	<table th:if="${inOutBoundLineList != null}">
+		<tr>
+			<th th:text="#{label.no}">ナンバー</th>
+			<th th:text="#{label.inoutbound}">にゅうしゅっか</th>
+			<th th:text="#{label.code}">しょうひんコード</th>
+			<th th:text="#{label.quantity}">すうりょう</th>
+		</tr>
+		<tr th:each="inOutBound : ${inOutBoundLineList.pageList}">
+			<td th:text="${inOutBound.no}">1</td>
+			<td th:text="${inOutBound.inOutType}">にゅうか</td>
+			<td th:text="${inOutBound.goodsCode}">100</td>
+			<td th:text="${inOutBound.quantity}">10</td>
+		</tr>
+	</table>
+	<div th:if="${inOutBoundLineList != null}">
+		<a th:if="${!inOutBoundLineList.firstPage}"
+			th:href="@{/inoutbound/history(page=${inOutBoundLineList.page - 1})}" th:text="#{label.previous}">Previous</a> 
+		<span th:text="${inOutBoundLineList.page + 1}">1</span>
+		<a th:if="${!inOutBoundLineList.lastPage}"
+			th:href="@{/inoutbound/history(page=${inOutBoundLineList.page + 1})}" th:text="#{label.next}">Next</a>
+		<br /><br />
+	</div>
+	<div>
+		<a th:href="@{'/stock/menu'}" th:text="#{label.back.stock.menu}">そうこメニューへ</a>
+	</div>
+	<footer>
+		<address th:text="#{footer.copyright}">コピーライト(C)20xx ぬる商事 Allright Reserved.</address>
+	</footer>
+</body>
+</html>

@@ -13,16 +13,19 @@
 	</header>
 	<form method="get" th:action="@{/goods/${code}}"
 		th:object="${goodsCode}">
-		<div th:if="${#fields.hasGlobalErrors()}">
-			<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">例外エラー</p>
+		
+		<div th:if="${errorCode != null}">
+			<p th:text="#{${errorCode}}">例外エラー</p>
 		</div>
+
 		<div th:if="${#fields.hasErrors('code')}">
 			<p th:errors="*{code}">Code Error</p>
 		</div>
+		
 		<div>
 			<ul>
 				<li><label>
-					<span th:text="#{code}">しょうひんコード</span>
+					<span th:text="#{label.code}">しょうひんコード</span>
 					<input type="text" name="code" th:field="*{code}" placeholder="数字を入力" />
 				</label></li>
 			</ul>

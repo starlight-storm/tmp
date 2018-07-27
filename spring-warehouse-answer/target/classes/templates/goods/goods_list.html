@@ -18,9 +18,9 @@
  
 	<table th:if="${goodsList != null}">
 		<tr>
-			<th th:text="#{code}">しょうひんコード</th>
-			<th th:text="#{name}">しょうひん名</th>
-			<th th:text="#{price}">かかく</th>
+			<th th:text="#{label.code}">しょうひんコード</th>
+			<th th:text="#{label.name}">しょうひん名</th>
+			<th th:text="#{label.price}">かかく</th>
 		</tr>
 		<tr th:each="goods : ${goodsList.pageList}">
 			<td th:text="${goods.code}">1</td>
@@ -35,6 +35,8 @@
 		<a th:if="${!goodsList.lastPage}"
 			th:href="@{/goods/find/list(page=${goodsList.page + 1})}" th:text="#{label.next}">Next</a>
 		<br /><br />
+	</div>
+	<div>
 		<a th:href="@{'/goods/menu'}" th:text="#{label.back.goods.menu}">ほんしゃメニューへ</a>
 	</div>
 

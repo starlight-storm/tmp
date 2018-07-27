@@ -11,18 +11,18 @@
 	<header>
 		<h1 th:text="#{header.goods}">ぬる商事 ほんしゃ</h1>
 	</header>
-	<form method="get" th:action="@/goods/find/input}">
+	<form method="get" th:action="@{/goods/find/input}">
 		<table>
 			<tr>
-				<th th:text="#{code}">しょうひんコード</th>
+				<th th:text="#{label.code}">しょうひんコード</th>
 				<td th:text="${goods.code}">11</td>
 			</tr>
 			<tr>
-				<th th:text="#{name}">しょうひん名</th>
+				<th th:text="#{label.name}">しょうひん名</th>
 				<td th:text="${goods.name}">りんご</td>
 			</tr>
 			<tr>
-				<th th:text="#{price}">かかく</th>
+				<th th:text="#{label.price}">かかく</th>
 				<td th:text="${goods.price}">¥250</td>
 			</tr>
 		</table>

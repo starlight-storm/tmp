@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+<IN_OUT_LOG NO="1" IN_OUT_TYPE="出荷" GOODS_CODE="30" QUANTITY="80"/>
+<IN_OUT_LOG NO="2" IN_OUT_TYPE="入荷" GOODS_CODE="100" QUANTITY="20"/>
+<IN_OUT_LOG NO="3" IN_OUT_TYPE="出荷" GOODS_CODE="222" QUANTITY="4"/>
+<IN_OUT_LOG NO="4" IN_OUT_TYPE="出荷" GOODS_CODE="100" QUANTITY="6"/>
+</dataset>

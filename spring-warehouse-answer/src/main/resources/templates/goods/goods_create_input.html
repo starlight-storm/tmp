@@ -12,10 +12,10 @@
 		<h1 th:text="#{header.goods}">ぬる商事 ほんしゃ</h1>
 	</header>
 	<form method="post"
-		th:action="@{/goods/{code}(code=${code})/create/confirm}" 
-		th:object="${goods}">
-		<div th:if="${#fields.hasGlobalErrors()}">
-			<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">例外エラー</p>
+		th:action="@{/goods/{code}(code=${code})/create/confirm}" th:object="${goods}">
+		
+		<div th:if="${errorCode != null}">
+			<p th:text="#{${errorCode}}">例外エラー</p>
 		</div>
 		<div th:if="${#fields.hasErrors('code')}">
 			<p th:errors="*{code}">Code Error</p>
@@ -29,15 +29,15 @@
 		<div>
 			<ul>
 				<li><label>
-					<span th:text="#{code}">しょうひんコード</span>
+					<span th:text="#{label.code}">しょうひんコード</span>
 					<input type="text" name="code" th:field="*{code}" placeholder="数字を入力" />
 				</label></li>
 				<li><label>
-					<span th:text="#{name}">しょうひん名</span>
+					<span th:text="#{label.name}">しょうひん名</span>
 					<input type="text" name="name" th:field="*{name}" placeholder="文字列を入力" />
 				</label></li>
 				<li><label>
-					<span th:text="#{price}">かかく</span>
+					<span th:text="#{label.price}">かかく</span>
 					<input type="text" name="price" th:field="*{price}" placeholder="数字を入力" />
 				</label></li>
 			</ul>

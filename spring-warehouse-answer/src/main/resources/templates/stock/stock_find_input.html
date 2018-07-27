@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<link href="/css/reset.css" th:href="@{/css/reset.css}" rel="stylesheet"></link>
+<link href="/css/warehouse.css" th:href="@{/css/warehouse.css}"	rel="stylesheet"></link>
+<title th:text="#{title.stock.find.input}">ざいこ検索画面（入力）</title>
+</head>
+<body>
+	<header>
+		<h1 th:text="#{header.stock}">ぬる商事 そうこ</h1>
+	</header>
+	<form method="get" th:action="@{/stock/${code}}" th:object="${goodsCode}">
+		
+		<div th:if="${errorCode != null}">
+			<p th:text="#{${errorCode}}">例外エラー</p>
+		</div>
+
+		<div th:if="${#fields.hasErrors('code')}">
+			<p th:errors="*{code}">Code Error</p>
+		</div>
+		
+		<div>
+			<ul>
+				<li><label>
+					<span th:text="#{label.code}">しょうひんコード</span>
+					<input type="text" name="code" th:field="*{code}" placeholder="数字を入力" />
+				</label></li>
+			</ul>
+			
+			<br />
+			<input type="submit" th:value="#{label.confirm}" value="かくにん" />
+			<br /> <br />
+			<a th:href="@{'/stock/menu'}" th:text="#{label.back.stock.menu}">そうこメニューへ</a>
+		</div>
+	</form>
+	<footer>
+		<address th:text="#{footer.copyright}">コピーライト(C)20xx ぬる商事 Allright Reserved.</address>
+	</footer>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<link href="/css/reset.css" th:href="@{/css/reset.css}" rel="stylesheet"></link>
+<link href="/css/warehouse.css" th:href="@{/css/warehouse.css}"	rel="stylesheet"></link>
+<title th:text="#{title.stock.find.input}">ざいこ検索画面（完了）</title>
+</head>
+<body>
+	<header>
+		<h1 th:text="#{header.stock}">ぬる商事 そうこ</h1>
+	</header>
+	<form method="get" th:action="@{/stock/find/input}">
+		<table>
+			<tr>
+				<th th:text="#{label.code}">しょうひんコード</th>
+				<td th:text="${stock.goodsCode}">11</td>
+			</tr>
+			<tr>
+				<th th:text="#{label.quantity}">すうりょう</th>
+				<td th:text="${stock.quantity}">りんご</td>
+			</tr>
+		</table>
+		<div>
+			<br />
+			<input type="submit" th:value="#{label.back}" value="もどる" />
+			<br /> <br />
+			<a th:href="@{'/stock/menu'}" th:text="#{label.back.stock.menu}">そうこメニューへ</a>
+		</div>
+	</form>
+	<footer>
+		<address th:text="#{footer.copyright}">コピーライト(C)20xx ぬる商事 Allright Reserved.</address>
+	</footer>
+</body>
+</html>

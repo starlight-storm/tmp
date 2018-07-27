@@ -1,8 +1,6 @@
 package com.example.goods.repository;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -11,25 +9,27 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.goods.domain.Goods;
-import com.example.goods.exception.GoodsCodeDupulicateException;
-import com.example.goods.exception.NoGoodsException;
 import com.example.goods.service.GoodsRepository;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
+import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @TestExecutionListeners({ DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class,
 		TransactionalTestExecutionListener.class, DbUnitTestExecutionListener.class })
 @DatabaseSetup("/data/goods/INPUT_GOODS_DATA.xml")
+@Transactional
 public class GoodsRepositoryTest {
 
 	@Autowired
@@ -46,22 +46,12 @@ public class GoodsRepositoryTest {
 
 	@Test
 	public void testFindGoods_異常系_存在しない商品コード() {
-		try {
-			goodsRepository.findGoods(777);
-			fail("Exception not thrown.");
-		} catch (NoGoodsException e) {
-			assertTrue(true);
-		}
+		assertNull(goodsRepository.findGoods(777));
 	}
 
 	@Test
 	public void testFindGoods_異常系_削除済みの商品コード() {
-		try {
-			goodsRepository.findGoods(3);
-			fail("Exception not thrown.");
-		} catch (NoGoodsException e) {
-			assertTrue(true);
-		}
+		assertNull(goodsRepository.findGoods(3));
 	}
 
 	@Test
@@ -96,20 +86,14 @@ public class GoodsRepositoryTest {
 	@Test
 	@DatabaseSetup("/data/goods/INPUT_GOODS_NO_DATA.xml")
 	public void testFindAllGoods_異常系_1件もない() throws Exception {
-
-		try {
-			List<Goods> goodsList = goodsRepository.findAllGoods();
-			for (Goods goods : goodsList) {
-				System.out.println(goods);
-			}
-			fail("Exception not thrown.");
-		} catch (NoGoodsException e) {
-			assertTrue(true);
-		}
+		List<Goods> goodsList = goodsRepository.findAllGoods();
+		assertEquals(0, goodsList.size());
 	}
 
 	@Test
-	@ExpectedDatabase("/data/goods/EXPECTED_CREATE_GOODS_DATA.xml")
+	@ExpectedDatabase(
+			value = "/data/goods/EXPECTED_CREATE_GOODS_DATA.xml",
+			assertionMode = DatabaseAssertionMode.NON_STRICT)
 	public void testCreateGoods_正常系() throws Exception {
 		Goods goods = new Goods(99, "バナナ", 210);
 		goodsRepository.createGoods(goods);
@@ -123,7 +107,7 @@ public class GoodsRepositoryTest {
 		try {
 			goodsRepository.createGoods(goods);
 			fail("Exception not thrown.");
-		} catch (GoodsCodeDupulicateException e) {
+		} catch (DuplicateKeyException e) {
 			assertTrue(true);
 		}
 	}
@@ -136,35 +120,30 @@ public class GoodsRepositoryTest {
 		try {
 			goodsRepository.createGoods(goods);
 			fail("Exception not thrown.");
-		} catch (GoodsCodeDupulicateException e) {
+		} catch (DuplicateKeyException e) {
 			assertTrue(true);
 		}
 	}
 
 	@Test
-	@ExpectedDatabase("/data/goods/EXPECTED_DELETE_GOODS_DATA.xml")
+	@ExpectedDatabase(
+			value = "/data/goods/EXPECTED_DELETE_GOODS_DATA.xml",
+			assertionMode = DatabaseAssertionMode.NON_STRICT)
 	public void testDeleteGoods_正常系() throws Exception {
-		goodsRepository.deleteGoods(1);
+		int cnt = goodsRepository.deleteGoods(1);
+		assertEquals(1, cnt);
 	}
 
 	@Test
 	public void testDeleteGoods_異常系_存在しない商品コード() {
-		try {
-			goodsRepository.deleteGoods(1001);
-			fail("Exception not thrown.");
-		} catch (NoGoodsException e) {
-			assertTrue(true);
-		}
+		int cnt = goodsRepository.deleteGoods(1001);
+		assertEquals(0, cnt);
 	}
 
 	@Test
 	public void testDeleteGoods_異常系_削除済みの商品コード() {
-		try {
-			goodsRepository.deleteGoods(3);
-			fail("Exception not thrown.");
-		} catch (NoGoodsException e) {
-			assertTrue(true);
-		}
+		int cnt = goodsRepository.deleteGoods(3);
+		assertEquals(0, cnt);
 	}
 
 	@Test
